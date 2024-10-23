@@ -6,8 +6,8 @@ API_KEY = '70Y87Slx2OFOyrlikj0v6yoxZ7cgGYvZ'  # Replace with your actual API key
 
 # Stop key for Park Lane
 stop_key = 's-gcvy4z9ws3-parklane'
-next_departure_seconds = 600  # Time frame in seconds
-limit = 1  # Limit the number of records
+next_departure_seconds = 12000  # Time frame in seconds
+limit = 8  # Limit the number of records
 
 # Construct the URL
 url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=12000&limit=4'
