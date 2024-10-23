@@ -30,7 +30,7 @@ try:
                 trip_headsign = departure['trip']['trip_headsign']
                 
                 # Check if the route is 26 or 44
-                if route_name in ['26', '44']:
+                if route_name in ['26', '44', 'N26']:
                     print(f"Next bus: {route_name} to {trip_headsign} at {scheduled_time}")
     else:
         print(f"Error: {response.status_code} - {response.text}")  # Output error message
