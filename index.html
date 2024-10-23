@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lothian Buses GTFS-RT Project Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Set Up Your Lothian Buses GTFS-RT Project</h1>
+    <p>This guide will help you set up your Raspberry Pi project to fetch and display real-time bus data from Lothian Buses using the GTFS-RT feed.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Raspberry Pi with Raspbian OS installed.</li>
+        <li>Python installed on your Raspberry Pi.</li>
+        <li>Access to the Lothian Buses GTFS-RT feed URL.</li>
+    </ul>
+
+    <h2>Step 1: Install Required Libraries</h2>
+    <p>Open a terminal on your Raspberry Pi and run the following command to install the necessary libraries:</p>
+    <pre><code>pip install gtfs-realtime-bindings protobuf requests protobuf-to-dict</code></pre>
+
+    <h2>Step 2: Create a Python Script</h2>
+    <p>Create a new Python file to fetch and display bus data. You can name it <code>fetch_lothian_buses.py</code>.</p>
+    <pre><code>nano fetch_lothian_buses.py</code></pre>
+    <p>Then, add the following code to the file:</p>
+    <pre><code>import requests
+from google.transit import gtfs_realtime_pb2
+from protobuf_to_dict import protobuf_to_dict
+
+# Fetch the GTFS-RT feed
+feed_url = 'YOUR_GTFS_RT_FEED_URL'  # Replace with your GTFS-RT feed URL
+response = requests.get(feed_url)
+
+# Parse the GTFS-RT feed
+feed = gtfs_realtime_pb2.FeedMessage()
+feed.ParseFromString(response.content)
+
+# Extract and display vehicle positions and trip updates
+for entity in feed.entity:
+    if entity.HasField('vehicle'):
+        vehicle = entity.vehicle
+        if vehicle.trip.route_id in ['26', '44']:  # Filter for routes 26 and 44
+            print(f"Bus {vehicle.vehicle.id} on route {vehicle.trip.route_id}")
+            print(f"Location: {vehicle.position.latitude}, {vehicle.position.longitude}")
+
+    if entity.HasField('trip_update'):
+        trip_update = entity.trip_update
+        for stop_time_update in trip_update.stop_time_update:
+            stop_id = stop_time_update.stop_id
+            arrival_time = stop_time_update.arrival.time
+            print(f"Bus arriving at stop {stop_id} at {arrival_time}")</code></pre>
+
+    <h2>Step 3: Replace the Feed URL</h2>
+    <p>Find the line in your script where it says <code>feed_url = 'YOUR_GTFS_RT_FEED_URL'</code> and replace <code>YOUR_GTFS_RT_FEED_URL</code> with your actual GTFS-RT feed URL.</p>
+
+    <h2>Step 4: Run Your Script</h2>
+    <p>Save your changes and run the script in the terminal:</p>
+    <pre><code>python fetch_lothian_buses.py</code></pre>
+    <p>You should see real-time bus data for routes 26 and 44 printed in the terminal.</p>
+
+    <h2>Step 5: Integrate with Your Display</h2>
+    <p>Once you have the data, you can format it as needed for your 64x32 dot matrix display. Update the code to send this formatted data to your display hardware.</p>
+
+    <h2>Conclusion</h2>
+    <p>By following these steps, you will successfully set up a project to fetch and display real-time Lothian Buses data on your Raspberry Pi!</p>
+</body>
+</html>
