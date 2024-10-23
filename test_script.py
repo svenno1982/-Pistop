@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests
 
 # Your API key
@@ -9,7 +10,7 @@ next_departure_seconds = 600  # Time frame in seconds
 limit = 1  # Limit the number of records
 
 # Construct the URL
-url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=600&limit=4'
+url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=12000&limit=4'
 print(f"Requesting URL: {url}")  # Debugging output
 
 # Send the request
