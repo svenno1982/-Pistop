@@ -19,7 +19,7 @@ print(f"Requesting URL: {url}")  # Debugging output
 while True:
     try:
         response = requests.get(url, headers={'apikey': API_KEY})
-        print(f"Response Status Code: {response.status_code}")  # Debugging output
+        ## print(f"Response Status Code: {response.status_code}")  # Debugging output
 
         # Check the response
         if response.status_code == 200:
