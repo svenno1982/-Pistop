@@ -3,8 +3,8 @@ import requests
 from datetime import datetime, timedelta
 import time
 
-# Your API key
-API_KEY = '70Y87Slx2OFOyrlikj0v6yoxZ7cgGYvZ'  # Replace with your actual API key
+# API key
+API_KEY = '70Y87Slx2OFOyrlikj0v6yoxZ7cgGYvZ'  
 
 # Stop key for Park Lane
 stop_key = 's-gcvy4z9ws3-parklane'
@@ -15,11 +15,11 @@ limit = 8  # Limit the number of records
 url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=12000&limit=4'
 print(f"Requesting URL: {url}")  # Debugging output
 
-# Infinite loop to refresh data every 30 seconds
+# Infinite loop to refresh data every XX seconds
 while True:
     try:
         response = requests.get(url, headers={'apikey': API_KEY})
-        ## print(f"Response Status Code: {response.status_code}")  # Debugging output
+        # print(f"Response Status Code: {response.status_code}")  # Debugging output currently disabled
 
         # Check the response
         if response.status_code == 200:
@@ -42,7 +42,7 @@ while True:
                         try:
                             scheduled_dt = datetime.combine(now.date(), datetime.strptime(scheduled_time, "%H:%M:%S").time())
                             
-                            # If the bus is scheduled for the next day, add one day
+                            # If the bus is scheduled for the next day, add one day < this is totaly pointless laff
                             if scheduled_dt < now:
                                 scheduled_dt += timedelta(days=1)
                             
