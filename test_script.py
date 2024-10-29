@@ -8,11 +8,11 @@ API_KEY = '70Y87Slx2OFOyrlikj0v6yoxZ7cgGYvZ'
 
 # Stop key for Park Lane
 stop_key = 's-gcvy4z9ws3-parklane'
-next_departure_seconds = 1200  # Time frame in seconds
+next_departure_seconds = 3600  # Time frame in seconds
 limit = 8  # Limit the number of records
 
 # Construct the URL
-url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=12000&limit=4'
+url = f'https://transit.land/api/v2/rest/stops/s-gcvy4z9ws3-parklane/departures?next=3600&limit=8'
 print(f"Requesting URL: {url}")  # Debugging output
 
 # Infinite loop to refresh data every XX seconds
@@ -42,7 +42,7 @@ while True:
                         try:
                             scheduled_dt = datetime.combine(now.date(), datetime.strptime(scheduled_time, "%H:%M:%S").time())
                             
-                            # If the bus is scheduled for the next day, add one day < this is totaly pointless laff
+                            # If the bus is scheduled for the next day, add one day < this is totaly pointless
                             if scheduled_dt < now:
                                 scheduled_dt += timedelta(days=1)
                             
@@ -69,4 +69,4 @@ while True:
         print(f"An error occurred: {e}")  # Print any exceptions that occur
 
     # Wait for 30 seconds before refreshing
-    time.sleep(30)
+    time.sleep(15)
